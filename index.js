@@ -1,7 +1,13 @@
-const { parser, generate } = require('@shaderfrog/glsl-parser');
 
-// To parse a GLSL program's source code into an AST:
-const ast = parser.parse('float a = 1.0;');
 
-// To turn a parsed AST back into a source program
-const program = generate(ast);
+( main = () => {
+
+	const rawInputs = process.argv;
+	const inputs = [rawInputs[rawInputs.length-2], rawInputs[rawInputs.length-1]];
+
+	const vast = require("./ast.js")(inputs[0]);
+	const fast = require("./ast.js")(inputs[1]);
+
+	console.log(vast, fast);
+}
+)();
