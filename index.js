@@ -1,4 +1,26 @@
+const scopes_ast = {};
 
+const scopify = (ast) => {
+	
+}
+
+
+function findFunction (ast, name) {
+	let functionTree = {};
+	ast.program.forEach( p => {
+		if (p.type === "function") {
+			let fName = p.prototype.header.name.identifier;
+			if (fName === name) {
+				functionTree = p;
+				return;
+			}
+
+		
+		}
+	} );
+
+	return functionTree;
+}
 
 ( main = () => {
 
@@ -7,7 +29,9 @@
 
 	const vast = require("./ast.js")(inputs[0]);
 	const fast = require("./ast.js")(inputs[1]);
-
+	
+	scopify();
+	
 	console.log(vast, fast);
 }
 )();
