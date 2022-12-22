@@ -1,37 +1,24 @@
-const scopes_ast = {};
+const analyzer = require ("./compute.js");
 
-const scopify = (ast) => {
-	
-}
+function processStatisticalData(computed) {
+	let paths  = computed.paths;
+	let squaredTotal= 0;
+	paths.forEach(path => {squaredTotal += path*path});
+	computed.pathSizeVariance = squaredTotal/paths.length;
+	computed.standardDaviation = computed.pathSizeVariance**.5;
+	return computed;
 
-
-function findFunction (ast, name) {
-	let functionTree = {};
-	ast.program.forEach( p => {
-		if (p.type === "function") {
-			let fName = p.prototype.header.name.identifier;
-			if (fName === name) {
-				functionTree = p;
-				return;
-			}
-
-		
-		}
-	} );
-
-	return functionTree;
 }
 
 ( main = () => {
 
 	const rawInputs = process.argv;
-	const inputs = [rawInputs[rawInputs.length-2], rawInputs[rawInputs.length-1]];
+	const inputs = [rawInputs[rawInputs.length-1]];
 
-	const vast = require("./ast.js")(inputs[0]);
-	const fast = require("./ast.js")(inputs[1]);
+	const  ast = require("./ast.js")(inputs[0]);
+	let analyzed = analyzer.analyse(ast);
 	
-	scopify();
+	console.log (processStatisticalData(analyzed));
 	
-	console.log(vast, fast);
 }
 )();

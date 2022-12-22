@@ -258,7 +258,7 @@ void main(){
 	if (side == .3) {
 		temperature = getTemperature(uTemperatureOffset);
 		precipitation = getPrecipitation(temperature);
-		index= ( getBiome(temperature,precipitation) );
+		index=   (getBiome(temperature,precipitation) ) ;
 
 		modelPosition.y += getGlaciarLayer(temperature);
 	}
@@ -286,10 +286,23 @@ void main(){
 	side = .3;
 	side = .4;
 
- 	if (side ==.2) {
+	if (side ==.2) {
 		side = .3;
 		side = .4;
 		side = .5;
+		if(side ==.4) {
+
+			side = .7;
+			side = .5;
+			if(side ==.4) {
+
+				side = .7;
+				side = .4;
+			}
+			side = .6;
+
+			side = .4;
+		}
 		side = .6;
 		side = .6;
 
@@ -298,6 +311,27 @@ void main(){
 	else if (side ==.4) {
 		side = .3;
 		side = .4;
+		if (side ==.2) {
+			side = .3;
+			side = .4;
+			side = .5;
+			if(side ==.4) {
+
+				side = .7;
+				side = .5;
+				if(side ==.4) {
+
+					side = .7;
+					side = .4;
+				}
+				side = .6;
+
+				side = .4;
+			}
+			side = .6;
+			side = .6;
+
+		}
 		side = .6;
 		side = .6;
 
