@@ -1,14 +1,32 @@
 let ops = require("./ops.js");
 
+let results = {cyclomaticComplexity: 0};
+
+function branchPaths(paths1, paths2, isBranch=0) {
+	console.log(isBranch, results.cyclomaticComplexity);
+
+	results.cyclomaticComplexity += (1*isBranch);
+
+	return ops.mergePaths(paths1, paths2);
+
+}
+
+
+function max (a, b) {
+	return a > b ? a : b;
+}
+
 function compute(program){
 
  	let paths = [0];
+	let nestDepth = 0;
+	let computed = {};
 
 	 if (program.body.statements === undefined) console.log (program);
 
 	 program.body.statements.forEach(statement => {
 		
-		paths = ops.mergePaths(paths, [1]);
+		paths = branchPaths(paths, [1]);
 		 
 		if (statement.type=="expression_statement") {
 			
@@ -22,19 +40,25 @@ function compute(program){
 				console.log("inner function found", calledFunction);
 				
 				if ( calledProgram !== null)
-					paths = ops.mergePaths(paths, compute(calledProgram));
-				
+				{
+					computed = compute(calledProgram);
+					paths = branchPaths(paths, computed.paths);
+				}
 			}
 
 			
 		}
 	       if (statement.type =="if_statement"){
-			let ifPaths = ops.mergePaths(paths, compute(statement));
+			let ifPaths = branchPaths(paths, compute(statement).paths, 1);
 		        let elsePaths = paths;
 
 		        if (statement.else !== undefined){
 				if (statement.else[1].type === "compound_statement")
-					elsePaths = ops.mergePaths(paths, compute({type: "else_statement", body: statement.else[1]}));
+				{
+					computed =compute({type: "else_statement", body: statement.else[1]}); 
+					nestDepth = max(computed.nestDepth, nestDepth);
+					elsePaths = branchPaths(paths, computed.paths   );
+				}
 				else   {
 					const elseIfProgram = {
 						type: "else_if_stmt",
@@ -42,7 +66,10 @@ function compute(program){
 							statements: [statement.else[1]]
 						}
 					};
-					elsePaths = ops.mergePaths(paths, compute(elseIfProgram));
+
+					computed = compute(elseIfProgram);
+					nestDepth = max(computed.nestDepth, nestDepth);
+					elsePaths = branchPaths(paths, computed.paths);
 				}
 			}
 
@@ -53,7 +80,9 @@ function compute(program){
 
 	 });
 
-	 return paths;
+	nestDepth++;
+
+	 return {paths, nestDepth};
 
  }
 
