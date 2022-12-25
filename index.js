@@ -1,7 +1,8 @@
 const analyzer = require ("./compute.js");
 
-function processStatisticalData(computed) {
+function postProcessData(computed) {
 	let paths  = computed.paths;
+	computed.totalNumberOfPaths = paths.length;
 	let totalSize = 0;
 	let variance = 0;
 	paths.forEach(path => {totalSize += path});
@@ -21,7 +22,7 @@ function processStatisticalData(computed) {
 	const  ast = require("./ast.js")(inputs[0]);
 	let analyzed = analyzer.analyse(ast);
 	
-	console.log (JSON.stringify(processStatisticalData(analyzed)));
+	console.log (JSON.stringify(postProcessData(analyzed)));
 
 	
 }
