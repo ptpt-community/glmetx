@@ -179,22 +179,6 @@ bool pointInsideOfTetragon(vec2 point, Tetragon r){
 
 
 
-int getBiome(float temperature, float precipitation) {
-
-	if(temperature<-2.50) return 1;
-	vec2 point = vec2(temperature, precipitation);
-	if (pointInsideOfTetragon(point, tundra)) return 1;
-	if (pointInsideOfTetragon(point, borealForest)) return 9;
-	if (pointInsideOfTetragon(point, grassland)) return 2;
-	if (pointInsideOfTetragon(point, woodland)) return 3;
-	if (pointInsideOfTetragon(point, temperateSeasonalForest)) return 4;
-	if (pointInsideOfTetragon(point, temperateRainForest)) return 5;
-	if (pointInsideOfTetragon(point, tropicalRainForest)) return 6;
-	if (pointInsideOfTetragon(point, savanna)) return 7;
-	if (pointInsideOfTetragon(point, subtropicalDesert)) return 8;
-	return 0;
-}
-
 
 
 
@@ -258,7 +242,6 @@ void main(){
 	if (side == .3) {
 		temperature = getTemperature(uTemperatureOffset);
 		precipitation = getPrecipitation(temperature);
-		index=   (getBiome(temperature,precipitation) ) ;
 
 		modelPosition.y += getGlaciarLayer(temperature);
 	}

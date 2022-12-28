@@ -1,7 +1,7 @@
 let ops = require("./ops.js");
 
 function analyse(ast) {
-	let results = {cyclomaticComplexity: 0};
+	let results = {cyclomaticComplexity: 1};
 
 	function branchPaths(paths1, paths2, isBranch=0) {
 
