@@ -83,7 +83,6 @@ function analyse(ast) {
 
 
 				paths =[...ifPaths, ...elsePaths]; 
-				console.log(ifPaths, elsePaths, paths);
 
 
 			}	
