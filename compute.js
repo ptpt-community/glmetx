@@ -80,7 +80,10 @@ function analyse(ast) {
 					}
 				}
 
-				paths = paths.concat(ifPaths, elsePaths);
+
+
+				paths =[...ifPaths, ...elsePaths]; 
+				console.log(ifPaths, elsePaths, paths);
 
 
 			}	
